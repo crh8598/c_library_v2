@@ -1522,6 +1522,19 @@
       <field type="float" name="rpm1">RPM Sensor1.</field>
       <field type="float" name="rpm2">RPM Sensor2.</field>
     </message>
+    <!-- message for AstroX BMS-->
+    <message id="227" name="PRI_BAT_INFO">
+     <description>Battery information for AstroX Battery Mannagement System</description>
+     <field type="uint64_t" name="time_usec" units="us">Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude of the number.</field>
+     <field type="float" name="bat_1" units="V"> AstroX BMS battery 1 Voltage</field>
+     <field type="float" name="bat_2" units="V"> AstroX BMS battery 2 Voltage</field>
+     <field type="float" name="current_1" units="mA">AstroX BMS battery 1 Current</field>
+     <field type="float" name="current_2" units="mA">AstroX BMS battery 2 Current</field>
+     <field type="float" name="temp_1" units="C">AstroX BMS battery 1 Temperature</field>
+     <field type="float" name="temp_2" units="C">AstroX BMS battery 2 Temperature</field>
+     <field type="uint32_t" name="fault_1">AstroX BMS battery 1 fault Message</field>
+     <field type="uint32_t" name="fault_2">AstroX BMS battery 2 fault Message</field>
+  </message>
     <!-- ardupilot specific mavlink2 messages starting at 11000-->
     <message id="11000" name="DEVICE_OP_READ">
       <description>Read registers for a device.</description>
