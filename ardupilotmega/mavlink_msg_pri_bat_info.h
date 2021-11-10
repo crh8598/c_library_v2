@@ -12,17 +12,18 @@ typedef struct __mavlink_pri_bat_info_t {
  float current_2; /*< [mA] AstroX BMS battery 2 Current*/
  float temp_1; /*< [C] AstroX BMS battery 1 Temperature*/
  float temp_2; /*< [C] AstroX BMS battery 2 Temperature*/
+ float soc; /*< [%] state of charge, percentage.*/
  uint32_t fault_1; /*<  AstroX BMS battery 1 fault Message*/
  uint32_t fault_2; /*<  AstroX BMS battery 2 fault Message*/
 } mavlink_pri_bat_info_t;
 
-#define MAVLINK_MSG_ID_PRI_BAT_INFO_LEN 40
-#define MAVLINK_MSG_ID_PRI_BAT_INFO_MIN_LEN 40
-#define MAVLINK_MSG_ID_227_LEN 40
-#define MAVLINK_MSG_ID_227_MIN_LEN 40
+#define MAVLINK_MSG_ID_PRI_BAT_INFO_LEN 44
+#define MAVLINK_MSG_ID_PRI_BAT_INFO_MIN_LEN 44
+#define MAVLINK_MSG_ID_227_LEN 44
+#define MAVLINK_MSG_ID_227_MIN_LEN 44
 
-#define MAVLINK_MSG_ID_PRI_BAT_INFO_CRC 251
-#define MAVLINK_MSG_ID_227_CRC 251
+#define MAVLINK_MSG_ID_PRI_BAT_INFO_CRC 112
+#define MAVLINK_MSG_ID_227_CRC 112
 
 
 
@@ -30,7 +31,7 @@ typedef struct __mavlink_pri_bat_info_t {
 #define MAVLINK_MESSAGE_INFO_PRI_BAT_INFO { \
     227, \
     "PRI_BAT_INFO", \
-    9, \
+    10, \
     {  { "time_usec", NULL, MAVLINK_TYPE_UINT64_T, 0, 0, offsetof(mavlink_pri_bat_info_t, time_usec) }, \
          { "bat_1", NULL, MAVLINK_TYPE_FLOAT, 0, 8, offsetof(mavlink_pri_bat_info_t, bat_1) }, \
          { "bat_2", NULL, MAVLINK_TYPE_FLOAT, 0, 12, offsetof(mavlink_pri_bat_info_t, bat_2) }, \
@@ -38,14 +39,15 @@ typedef struct __mavlink_pri_bat_info_t {
          { "current_2", NULL, MAVLINK_TYPE_FLOAT, 0, 20, offsetof(mavlink_pri_bat_info_t, current_2) }, \
          { "temp_1", NULL, MAVLINK_TYPE_FLOAT, 0, 24, offsetof(mavlink_pri_bat_info_t, temp_1) }, \
          { "temp_2", NULL, MAVLINK_TYPE_FLOAT, 0, 28, offsetof(mavlink_pri_bat_info_t, temp_2) }, \
-         { "fault_1", NULL, MAVLINK_TYPE_UINT32_T, 0, 32, offsetof(mavlink_pri_bat_info_t, fault_1) }, \
-         { "fault_2", NULL, MAVLINK_TYPE_UINT32_T, 0, 36, offsetof(mavlink_pri_bat_info_t, fault_2) }, \
+         { "soc", NULL, MAVLINK_TYPE_FLOAT, 0, 32, offsetof(mavlink_pri_bat_info_t, soc) }, \
+         { "fault_1", NULL, MAVLINK_TYPE_UINT32_T, 0, 36, offsetof(mavlink_pri_bat_info_t, fault_1) }, \
+         { "fault_2", NULL, MAVLINK_TYPE_UINT32_T, 0, 40, offsetof(mavlink_pri_bat_info_t, fault_2) }, \
          } \
 }
 #else
 #define MAVLINK_MESSAGE_INFO_PRI_BAT_INFO { \
     "PRI_BAT_INFO", \
-    9, \
+    10, \
     {  { "time_usec", NULL, MAVLINK_TYPE_UINT64_T, 0, 0, offsetof(mavlink_pri_bat_info_t, time_usec) }, \
          { "bat_1", NULL, MAVLINK_TYPE_FLOAT, 0, 8, offsetof(mavlink_pri_bat_info_t, bat_1) }, \
          { "bat_2", NULL, MAVLINK_TYPE_FLOAT, 0, 12, offsetof(mavlink_pri_bat_info_t, bat_2) }, \
@@ -53,8 +55,9 @@ typedef struct __mavlink_pri_bat_info_t {
          { "current_2", NULL, MAVLINK_TYPE_FLOAT, 0, 20, offsetof(mavlink_pri_bat_info_t, current_2) }, \
          { "temp_1", NULL, MAVLINK_TYPE_FLOAT, 0, 24, offsetof(mavlink_pri_bat_info_t, temp_1) }, \
          { "temp_2", NULL, MAVLINK_TYPE_FLOAT, 0, 28, offsetof(mavlink_pri_bat_info_t, temp_2) }, \
-         { "fault_1", NULL, MAVLINK_TYPE_UINT32_T, 0, 32, offsetof(mavlink_pri_bat_info_t, fault_1) }, \
-         { "fault_2", NULL, MAVLINK_TYPE_UINT32_T, 0, 36, offsetof(mavlink_pri_bat_info_t, fault_2) }, \
+         { "soc", NULL, MAVLINK_TYPE_FLOAT, 0, 32, offsetof(mavlink_pri_bat_info_t, soc) }, \
+         { "fault_1", NULL, MAVLINK_TYPE_UINT32_T, 0, 36, offsetof(mavlink_pri_bat_info_t, fault_1) }, \
+         { "fault_2", NULL, MAVLINK_TYPE_UINT32_T, 0, 40, offsetof(mavlink_pri_bat_info_t, fault_2) }, \
          } \
 }
 #endif
@@ -72,12 +75,13 @@ typedef struct __mavlink_pri_bat_info_t {
  * @param current_2 [mA] AstroX BMS battery 2 Current
  * @param temp_1 [C] AstroX BMS battery 1 Temperature
  * @param temp_2 [C] AstroX BMS battery 2 Temperature
+ * @param soc [%] state of charge, percentage.
  * @param fault_1  AstroX BMS battery 1 fault Message
  * @param fault_2  AstroX BMS battery 2 fault Message
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_pri_bat_info_pack(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg,
-                               uint64_t time_usec, float bat_1, float bat_2, float current_1, float current_2, float temp_1, float temp_2, uint32_t fault_1, uint32_t fault_2)
+                               uint64_t time_usec, float bat_1, float bat_2, float current_1, float current_2, float temp_1, float temp_2, float soc, uint32_t fault_1, uint32_t fault_2)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_PRI_BAT_INFO_LEN];
@@ -88,8 +92,9 @@ static inline uint16_t mavlink_msg_pri_bat_info_pack(uint8_t system_id, uint8_t 
     _mav_put_float(buf, 20, current_2);
     _mav_put_float(buf, 24, temp_1);
     _mav_put_float(buf, 28, temp_2);
-    _mav_put_uint32_t(buf, 32, fault_1);
-    _mav_put_uint32_t(buf, 36, fault_2);
+    _mav_put_float(buf, 32, soc);
+    _mav_put_uint32_t(buf, 36, fault_1);
+    _mav_put_uint32_t(buf, 40, fault_2);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_PRI_BAT_INFO_LEN);
 #else
@@ -101,6 +106,7 @@ static inline uint16_t mavlink_msg_pri_bat_info_pack(uint8_t system_id, uint8_t 
     packet.current_2 = current_2;
     packet.temp_1 = temp_1;
     packet.temp_2 = temp_2;
+    packet.soc = soc;
     packet.fault_1 = fault_1;
     packet.fault_2 = fault_2;
 
@@ -124,13 +130,14 @@ static inline uint16_t mavlink_msg_pri_bat_info_pack(uint8_t system_id, uint8_t 
  * @param current_2 [mA] AstroX BMS battery 2 Current
  * @param temp_1 [C] AstroX BMS battery 1 Temperature
  * @param temp_2 [C] AstroX BMS battery 2 Temperature
+ * @param soc [%] state of charge, percentage.
  * @param fault_1  AstroX BMS battery 1 fault Message
  * @param fault_2  AstroX BMS battery 2 fault Message
  * @return length of the message in bytes (excluding serial stream start sign)
  */
 static inline uint16_t mavlink_msg_pri_bat_info_pack_chan(uint8_t system_id, uint8_t component_id, uint8_t chan,
                                mavlink_message_t* msg,
-                                   uint64_t time_usec,float bat_1,float bat_2,float current_1,float current_2,float temp_1,float temp_2,uint32_t fault_1,uint32_t fault_2)
+                                   uint64_t time_usec,float bat_1,float bat_2,float current_1,float current_2,float temp_1,float temp_2,float soc,uint32_t fault_1,uint32_t fault_2)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_PRI_BAT_INFO_LEN];
@@ -141,8 +148,9 @@ static inline uint16_t mavlink_msg_pri_bat_info_pack_chan(uint8_t system_id, uin
     _mav_put_float(buf, 20, current_2);
     _mav_put_float(buf, 24, temp_1);
     _mav_put_float(buf, 28, temp_2);
-    _mav_put_uint32_t(buf, 32, fault_1);
-    _mav_put_uint32_t(buf, 36, fault_2);
+    _mav_put_float(buf, 32, soc);
+    _mav_put_uint32_t(buf, 36, fault_1);
+    _mav_put_uint32_t(buf, 40, fault_2);
 
         memcpy(_MAV_PAYLOAD_NON_CONST(msg), buf, MAVLINK_MSG_ID_PRI_BAT_INFO_LEN);
 #else
@@ -154,6 +162,7 @@ static inline uint16_t mavlink_msg_pri_bat_info_pack_chan(uint8_t system_id, uin
     packet.current_2 = current_2;
     packet.temp_1 = temp_1;
     packet.temp_2 = temp_2;
+    packet.soc = soc;
     packet.fault_1 = fault_1;
     packet.fault_2 = fault_2;
 
@@ -174,7 +183,7 @@ static inline uint16_t mavlink_msg_pri_bat_info_pack_chan(uint8_t system_id, uin
  */
 static inline uint16_t mavlink_msg_pri_bat_info_encode(uint8_t system_id, uint8_t component_id, mavlink_message_t* msg, const mavlink_pri_bat_info_t* pri_bat_info)
 {
-    return mavlink_msg_pri_bat_info_pack(system_id, component_id, msg, pri_bat_info->time_usec, pri_bat_info->bat_1, pri_bat_info->bat_2, pri_bat_info->current_1, pri_bat_info->current_2, pri_bat_info->temp_1, pri_bat_info->temp_2, pri_bat_info->fault_1, pri_bat_info->fault_2);
+    return mavlink_msg_pri_bat_info_pack(system_id, component_id, msg, pri_bat_info->time_usec, pri_bat_info->bat_1, pri_bat_info->bat_2, pri_bat_info->current_1, pri_bat_info->current_2, pri_bat_info->temp_1, pri_bat_info->temp_2, pri_bat_info->soc, pri_bat_info->fault_1, pri_bat_info->fault_2);
 }
 
 /**
@@ -188,7 +197,7 @@ static inline uint16_t mavlink_msg_pri_bat_info_encode(uint8_t system_id, uint8_
  */
 static inline uint16_t mavlink_msg_pri_bat_info_encode_chan(uint8_t system_id, uint8_t component_id, uint8_t chan, mavlink_message_t* msg, const mavlink_pri_bat_info_t* pri_bat_info)
 {
-    return mavlink_msg_pri_bat_info_pack_chan(system_id, component_id, chan, msg, pri_bat_info->time_usec, pri_bat_info->bat_1, pri_bat_info->bat_2, pri_bat_info->current_1, pri_bat_info->current_2, pri_bat_info->temp_1, pri_bat_info->temp_2, pri_bat_info->fault_1, pri_bat_info->fault_2);
+    return mavlink_msg_pri_bat_info_pack_chan(system_id, component_id, chan, msg, pri_bat_info->time_usec, pri_bat_info->bat_1, pri_bat_info->bat_2, pri_bat_info->current_1, pri_bat_info->current_2, pri_bat_info->temp_1, pri_bat_info->temp_2, pri_bat_info->soc, pri_bat_info->fault_1, pri_bat_info->fault_2);
 }
 
 /**
@@ -202,12 +211,13 @@ static inline uint16_t mavlink_msg_pri_bat_info_encode_chan(uint8_t system_id, u
  * @param current_2 [mA] AstroX BMS battery 2 Current
  * @param temp_1 [C] AstroX BMS battery 1 Temperature
  * @param temp_2 [C] AstroX BMS battery 2 Temperature
+ * @param soc [%] state of charge, percentage.
  * @param fault_1  AstroX BMS battery 1 fault Message
  * @param fault_2  AstroX BMS battery 2 fault Message
  */
 #ifdef MAVLINK_USE_CONVENIENCE_FUNCTIONS
 
-static inline void mavlink_msg_pri_bat_info_send(mavlink_channel_t chan, uint64_t time_usec, float bat_1, float bat_2, float current_1, float current_2, float temp_1, float temp_2, uint32_t fault_1, uint32_t fault_2)
+static inline void mavlink_msg_pri_bat_info_send(mavlink_channel_t chan, uint64_t time_usec, float bat_1, float bat_2, float current_1, float current_2, float temp_1, float temp_2, float soc, uint32_t fault_1, uint32_t fault_2)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char buf[MAVLINK_MSG_ID_PRI_BAT_INFO_LEN];
@@ -218,8 +228,9 @@ static inline void mavlink_msg_pri_bat_info_send(mavlink_channel_t chan, uint64_
     _mav_put_float(buf, 20, current_2);
     _mav_put_float(buf, 24, temp_1);
     _mav_put_float(buf, 28, temp_2);
-    _mav_put_uint32_t(buf, 32, fault_1);
-    _mav_put_uint32_t(buf, 36, fault_2);
+    _mav_put_float(buf, 32, soc);
+    _mav_put_uint32_t(buf, 36, fault_1);
+    _mav_put_uint32_t(buf, 40, fault_2);
 
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_PRI_BAT_INFO, buf, MAVLINK_MSG_ID_PRI_BAT_INFO_MIN_LEN, MAVLINK_MSG_ID_PRI_BAT_INFO_LEN, MAVLINK_MSG_ID_PRI_BAT_INFO_CRC);
 #else
@@ -231,6 +242,7 @@ static inline void mavlink_msg_pri_bat_info_send(mavlink_channel_t chan, uint64_
     packet.current_2 = current_2;
     packet.temp_1 = temp_1;
     packet.temp_2 = temp_2;
+    packet.soc = soc;
     packet.fault_1 = fault_1;
     packet.fault_2 = fault_2;
 
@@ -246,7 +258,7 @@ static inline void mavlink_msg_pri_bat_info_send(mavlink_channel_t chan, uint64_
 static inline void mavlink_msg_pri_bat_info_send_struct(mavlink_channel_t chan, const mavlink_pri_bat_info_t* pri_bat_info)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
-    mavlink_msg_pri_bat_info_send(chan, pri_bat_info->time_usec, pri_bat_info->bat_1, pri_bat_info->bat_2, pri_bat_info->current_1, pri_bat_info->current_2, pri_bat_info->temp_1, pri_bat_info->temp_2, pri_bat_info->fault_1, pri_bat_info->fault_2);
+    mavlink_msg_pri_bat_info_send(chan, pri_bat_info->time_usec, pri_bat_info->bat_1, pri_bat_info->bat_2, pri_bat_info->current_1, pri_bat_info->current_2, pri_bat_info->temp_1, pri_bat_info->temp_2, pri_bat_info->soc, pri_bat_info->fault_1, pri_bat_info->fault_2);
 #else
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_PRI_BAT_INFO, (const char *)pri_bat_info, MAVLINK_MSG_ID_PRI_BAT_INFO_MIN_LEN, MAVLINK_MSG_ID_PRI_BAT_INFO_LEN, MAVLINK_MSG_ID_PRI_BAT_INFO_CRC);
 #endif
@@ -260,7 +272,7 @@ static inline void mavlink_msg_pri_bat_info_send_struct(mavlink_channel_t chan, 
   is usually the receive buffer for the channel, and allows a reply to an
   incoming message with minimum stack space usage.
  */
-static inline void mavlink_msg_pri_bat_info_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint64_t time_usec, float bat_1, float bat_2, float current_1, float current_2, float temp_1, float temp_2, uint32_t fault_1, uint32_t fault_2)
+static inline void mavlink_msg_pri_bat_info_send_buf(mavlink_message_t *msgbuf, mavlink_channel_t chan,  uint64_t time_usec, float bat_1, float bat_2, float current_1, float current_2, float temp_1, float temp_2, float soc, uint32_t fault_1, uint32_t fault_2)
 {
 #if MAVLINK_NEED_BYTE_SWAP || !MAVLINK_ALIGNED_FIELDS
     char *buf = (char *)msgbuf;
@@ -271,8 +283,9 @@ static inline void mavlink_msg_pri_bat_info_send_buf(mavlink_message_t *msgbuf, 
     _mav_put_float(buf, 20, current_2);
     _mav_put_float(buf, 24, temp_1);
     _mav_put_float(buf, 28, temp_2);
-    _mav_put_uint32_t(buf, 32, fault_1);
-    _mav_put_uint32_t(buf, 36, fault_2);
+    _mav_put_float(buf, 32, soc);
+    _mav_put_uint32_t(buf, 36, fault_1);
+    _mav_put_uint32_t(buf, 40, fault_2);
 
     _mav_finalize_message_chan_send(chan, MAVLINK_MSG_ID_PRI_BAT_INFO, buf, MAVLINK_MSG_ID_PRI_BAT_INFO_MIN_LEN, MAVLINK_MSG_ID_PRI_BAT_INFO_LEN, MAVLINK_MSG_ID_PRI_BAT_INFO_CRC);
 #else
@@ -284,6 +297,7 @@ static inline void mavlink_msg_pri_bat_info_send_buf(mavlink_message_t *msgbuf, 
     packet->current_2 = current_2;
     packet->temp_1 = temp_1;
     packet->temp_2 = temp_2;
+    packet->soc = soc;
     packet->fault_1 = fault_1;
     packet->fault_2 = fault_2;
 
@@ -368,13 +382,23 @@ static inline float mavlink_msg_pri_bat_info_get_temp_2(const mavlink_message_t*
 }
 
 /**
+ * @brief Get field soc from pri_bat_info message
+ *
+ * @return [%] state of charge, percentage.
+ */
+static inline float mavlink_msg_pri_bat_info_get_soc(const mavlink_message_t* msg)
+{
+    return _MAV_RETURN_float(msg,  32);
+}
+
+/**
  * @brief Get field fault_1 from pri_bat_info message
  *
  * @return  AstroX BMS battery 1 fault Message
  */
 static inline uint32_t mavlink_msg_pri_bat_info_get_fault_1(const mavlink_message_t* msg)
 {
-    return _MAV_RETURN_uint32_t(msg,  32);
+    return _MAV_RETURN_uint32_t(msg,  36);
 }
 
 /**
@@ -384,7 +408,7 @@ static inline uint32_t mavlink_msg_pri_bat_info_get_fault_1(const mavlink_messag
  */
 static inline uint32_t mavlink_msg_pri_bat_info_get_fault_2(const mavlink_message_t* msg)
 {
-    return _MAV_RETURN_uint32_t(msg,  36);
+    return _MAV_RETURN_uint32_t(msg,  40);
 }
 
 /**
@@ -403,6 +427,7 @@ static inline void mavlink_msg_pri_bat_info_decode(const mavlink_message_t* msg,
     pri_bat_info->current_2 = mavlink_msg_pri_bat_info_get_current_2(msg);
     pri_bat_info->temp_1 = mavlink_msg_pri_bat_info_get_temp_1(msg);
     pri_bat_info->temp_2 = mavlink_msg_pri_bat_info_get_temp_2(msg);
+    pri_bat_info->soc = mavlink_msg_pri_bat_info_get_soc(msg);
     pri_bat_info->fault_1 = mavlink_msg_pri_bat_info_get_fault_1(msg);
     pri_bat_info->fault_2 = mavlink_msg_pri_bat_info_get_fault_2(msg);
 #else

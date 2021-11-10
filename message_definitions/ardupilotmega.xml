@@ -1577,6 +1577,7 @@
      <field type="float" name="current_2" units="mA">AstroX BMS battery 2 Current</field>
      <field type="float" name="temp_1" units="C">AstroX BMS battery 1 Temperature</field>
      <field type="float" name="temp_2" units="C">AstroX BMS battery 2 Temperature</field>
+     <field type="float" name="soc" units="%">state of charge, percentage.</field>
      <field type="uint32_t" name="fault_1">AstroX BMS battery 1 fault Message</field>
      <field type="uint32_t" name="fault_2">AstroX BMS battery 2 fault Message</field>
   </message>
